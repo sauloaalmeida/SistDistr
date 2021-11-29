@@ -20,12 +20,15 @@ novoSock, endereco = sock.accept() # retorna um novo socket e o endereco do par 
 print ('Conectado com: ', endereco)
 
 while True:
-	# depois de conectar-se, espera uma mensagem (chamada pode ser BLOQUEANTE))
-	msg = novoSock.recv(1024) # argumento indica a qtde maxima de dados
-	if not msg: break 
-	else: print(str(msg,  encoding='utf-8'))
-	# envia mensagem de resposta
-	novoSock.send(b"Ola, sou o lado passivo!") 
+     # depois de conectar-se, espera uma mensagem (chamada pode ser BLOQUEANTE))
+     msg = novoSock.recv(1024) # argumento indica a qtde maxima de dados
+     if not msg or str(msg,  encoding='utf-8') == 'fim':
+          break
+     else:
+          print(str(msg,  encoding='utf-8'))
+          # envia mensagem de resposta
+          echoMsg = "Echo: " + str(msg,encoding='utf-8')
+          novoSock.send(echoMsg.encode('utf-8'))
 
 # fecha o socket da conexao
 novoSock.close() 
