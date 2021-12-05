@@ -1,6 +1,7 @@
 # Exemplo basico socket (lado passivo)
 
 import socket
+import service
 
 HOST = ''    # '' possibilita acessar qualquer endereco alcancavel da maquina local
 PORTA = 5000  # porta onde chegarao as mensagens para essa aplicacao
@@ -25,10 +26,14 @@ while True:
      if not msg or str(msg,  encoding='utf-8') == 'fim':
           break
      else:
-          print(str(msg,  encoding='utf-8'))
-          # envia mensagem de resposta
-          echoMsg = "Echo: " + str(msg,encoding='utf-8')
-          novoSock.send(echoMsg.encode('utf-8'))
+          msgStr=str(msg,  encoding='utf-8')
+          print(msgStr)
+          
+          #separa os parametros da busca (arquivo e query)
+          arq,query = msgStr.split(',')
+          
+          msgReturn = service.getWordOccurences(arq, query)
+          novoSock.send(msgReturn.encode('utf-8'))
 
 # fecha o socket da conexao
 novoSock.close() 
