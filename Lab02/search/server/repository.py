@@ -1,4 +1,3 @@
-from PyPDF2 import PdfFileReader
 from os.path import exists
 
 FILE_PATH="/home/saulo/SistDistr/Lab02/search/server/files/"
@@ -22,22 +21,6 @@ def getContent(arq):
      
 
 
-def getPdfContent(arq):
-     fullPath=FILE_PATH + arq
-     text = ""
-     
-     if not exists(fullPath):
-          return ERROR_MSG
-     else:     
-          with open(fullPath, 'rb') as f:
-               pdf = PdfFileReader(f)
-               info = pdf.getDocumentInfo()
-               numberOfPages = pdf.getNumPages()
-               for pageNumber in range(numberOfPages):
-                    page = pdf.getPage(pageNumber)
-                    text += page.extractText()
-               return text
-                  
-        
+
 #print(getContent('Little-Prince-final-text.pdf'))
 
