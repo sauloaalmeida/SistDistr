@@ -8,10 +8,12 @@ def countWord(text,query):
 def getWordOccurences(arq, query):
      content = repository.getContent(arq)
      if content == ERROR_MSG:
-     	  return content
+     	  return content.format(arquivo = arq)
      	  
      #se ainda esta aqui, conta as palavras do conteudo do livro
      ocurrences = countWord(content, query)
-     return "A palavra '" + query + "' foi encontrada: " + str(ocurrences) + " vezes"
+     msgReturn = "A palavra '{q}' foi encontrada: '{vezes}' vezes no arquivo '{arquivo}'"
 
-#print(getWordOccurences('1-TheHungerGames.txt','hsajahskjashhkjhe'))
+     return msgReturn.format(q=query, vezes=str(ocurrences), arquivo=arq)
+
+#print(getWordOccurences('book01.txt','he is'))

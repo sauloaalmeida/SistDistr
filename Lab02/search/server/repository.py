@@ -1,7 +1,7 @@
 from os.path import exists
 
 FILE_PATH="/home/saulo/SistDistr/Lab02/search/server/files/"
-ERROR_MSG="Arquivo solicitado nao foi encontrado"
+ERROR_MSG="Arquivo '{arquivo}' solicitado nao foi encontrado"
     
 def getContent(arq):
      fullPath=FILE_PATH + arq
@@ -20,7 +20,4 @@ def getContent(arq):
      return text
      
 
-
-
 #print(getContent('Little-Prince-final-text.pdf'))
-
