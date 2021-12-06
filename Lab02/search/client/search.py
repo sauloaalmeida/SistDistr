@@ -1,8 +1,7 @@
-# Exemplo basico socket (lado ativo)
-
 import socket
 import re
 
+#valida os dados de entrada informado pelo usuario
 def validaEntrada(msg):
      return (re.search("\w+,\w+",msg) != None and msg.count(',') == 1)
 

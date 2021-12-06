@@ -1,5 +1,3 @@
-# Exemplo basico socket (lado passivo)
-
 import socket
 import service
 
