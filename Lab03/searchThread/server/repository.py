@@ -1,7 +1,7 @@
 from os.path import exists
 
 #Constantes usadas no projeto
-FILE_PATH="/home/saulo/SistDistr/Lab02/search/server/files/"
+FILE_PATH="/home/saulo/SistDistr/files/"
 ERROR_MSG="Arquivo '{arquivo}' solicitado nao foi encontrado"
     
     
@@ -15,7 +15,7 @@ def getContent(arq):
      if not exists(fullPath):
           return ERROR_MSG
      
-     #se aind esta aqui, le o arquivo e devolve o conteudo
+     #se ainda esta aqui, le o arquivo e devolve o conteudo
      file = open(fullPath,mode='r')
      text = file.read()
  
