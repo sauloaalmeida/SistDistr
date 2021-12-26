@@ -3,14 +3,24 @@ import re
 
 DOWNLOAD_PATH="/home/saulo/SistDistr/download/"
 
-#valida os dados de entrada informado pelo usuario
+'''Metodo que valida se o usuario digitou alguma coisa ao solicitar o arquivo 
+   Entrada: Nome do arquivo digitado pelo usuario
+   Saida: booleano indicando que o nome veio em branco'''
 def validaEntrada(msg):
     return (re.search("\w+",msg) != None )
 
+
+'''Metodo que salva o conteudo do arquivo, em um novo arquivo na pasta de transferencias do lado cliente
+   Entrada: Nome do arquivo, Conteudo do Arquivo
+   Saida:'''
 def saveFile(fileName, fileContent):
     with open(DOWNLOAD_PATH + fileName, 'w') as f:
         f.write(fileContent)
 
+'''Metodo Principal com loop para interagir com o usuario e com tratamento das entradas do usuario
+   e da excecao de arquivo inexistente
+   Entrada:
+   Saida:'''
 def doRequests():
     #loop infinito para permitir varias operacoes do cliente
     while True:

@@ -10,6 +10,9 @@ inputs = [sys.stdin] #define a lista de I/O de interesse (jah inclui a entrada p
 conns = {} #armazena historico de conexoes
 
 
+'''Pega o conteudo do arquivo na camada de processamento (service.py)
+   Entrada: o nome do Arquivo
+   Saida: Conteudo do arquivo ou o conteudo "ERROR", caso o arquivo nao exista'''
 def getFileContent(fileName):
     try:
         fileContent = service.fileContent(fileName)
@@ -17,7 +20,9 @@ def getFileContent(fileName):
         fileContent = "ERROR"
     return fileContent
 
-# Modularizando a conexao dos nos
+'''Inicializa o socket inicial do lado server
+   Entrada: 
+   Saida: o socket inicial do lado server'''
 def initializeServer():
 
     # cria um socket para comunicacao
@@ -39,11 +44,11 @@ def initializeServer():
     #retorna o socket de conexao principal
     return sock
 
-
+'''Aceita o pedido de conexao de um cliente
+   Entrada: o socket do servidor
+   Saida: o novo socket da conexao e o endereco do cliente'''
 def acceptConn(sock):
-    '''Aceita o pedido de conexao de um cliente
-       Entrada: o socket do servidor
-       Saida: o novo socket da conexao e o endereco do cliente'''
+
 
     # estabelece conexao com o proximo cliente
     clisock, endr = sock.accept()
@@ -54,11 +59,14 @@ def acceptConn(sock):
     return clisock, endr
 
 
+'''Metodo que eh executado na thread do servidor, a cada requisicao. 
+   Recebe uma mensagen com o nome do arquivo e envia de volta o conteudo do arquivo para 
+   o cliente (ate o cliente finalizar). Apos o envio, a conexao eh fechada para forcar o 
+   envio da mensagem. Essa foi a estrategia adotada para facilitar o recebimento no loop do lado cliente.
+   Envia o conteudo do arquivo solicitado para o Socket informado na entrada.
+   Entrada: socket da conexao e endereco do cliente (para efeito de log)
+   Saida: '''
 def answeringRequests (cliSock, endr):
-    '''Recebe mensagens e as envia de volta para o cliente (ate o cliente finalizar)
-       Entrada: socket da conexao e endereco do cliente
-       Saida: '''
-
     #recebe dados do cliente
     data = cliSock.recv(1024)
     if not data: # dados vazios: encerra o cliente encerrou
@@ -83,8 +91,11 @@ def answeringRequests (cliSock, endr):
     #fecha a conexao logo apos o envio
     cliSock.close()
 
-
-#funcao principal da rotina server
+'''Funcao principal da rotina server. Gerencia os acessos bloqueantes dos sockets, do teclado e cria 
+   instancias de execucao (com threads) para cada nova requisicao feita ao lado server.
+   Entrada: 
+   Saida: '''
+#
 def main():
     #Inicializa e implementa o loop principal (infinito) do servidor
     clients=[] #armazena as threads criadas para fazer join
@@ -112,5 +123,5 @@ def main():
                 elif cmd == 'hist': #outro exemplo de comando para o servidor
                     print(str(conns.values()))
 
-
+#executa o codigo do lado server
 main()

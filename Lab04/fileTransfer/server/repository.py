@@ -2,10 +2,9 @@
 FILE_PATH="/home/saulo/SistDistr/files/"
 
 '''Metodo que retorna o conteudo do arquivo 
-   eh esperado que sua existencia ja tenha sido testada 
    Entrada: nome do arquivo
    Saida: se o arquivo existir, retorna o conteudo (como string) de todo o arquivo
-          se o arquivo nao existir, sobe a exception FileNotFoundError 
+          se o arquivo nao existir, deixa vazar a exception FileNotFoundError da API do Python 
 '''
 def getFileContent(arq):
      fullPath=FILE_PATH + arq
