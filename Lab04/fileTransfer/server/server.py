@@ -10,6 +10,13 @@ inputs = [sys.stdin] #define a lista de I/O de interesse (jah inclui a entrada p
 conns = {} #armazena historico de conexoes
 
 
+def getFileContent(fileName):
+    try:
+        fileContent = service.fileContent(fileName)
+    except FileNotFoundError:
+        fileContent = "ERROR"
+    return fileContent
+
 # Modularizando a conexao dos nos
 def initializeServer():
 
@@ -52,26 +59,29 @@ def answeringRequests (cliSock, endr):
        Entrada: socket da conexao e endereco do cliente
        Saida: '''
 
-    while True:
-        #recebe dados do cliente
-        data = cliSock.recv(1024)
-        if not data: # dados vazios: encerra o cliente encerrou
-            print(str(endr) + '-> encerrou')
-            cliSock.close() # encerra a conexao com o cliente
-            return 
-        
-        #se ainda esta aqui, atende a requisicao do cliente
-        #pega a string enviada
-        nomeArq = str(data, encoding='utf-8')
-        
-        #printa log do que esta sendo atendido
-        print(str(endr) + ': ' + nomeArq)
-        
-        #Obtem da camada de processamento, a mensagem formatada da quantidade de ocorrencias
-        textContent = service.getTextFile(nomeArq)
-        
-        #envia a resposta para o lado client 
-        cliSock.sendall(textContent.encode('utf-8')) 
+    #recebe dados do cliente
+    data = cliSock.recv(1024)
+    if not data: # dados vazios: encerra o cliente encerrou
+        print(str(endr) + '-> encerrou')
+        cliSock.close() # encerra a conexao com o cliente
+        return 
+    
+    #se ainda esta aqui, atende a requisicao do cliente
+    #pega a string enviada
+    nomeArq = str(data, encoding='utf-8')
+    
+    #printa log do que esta sendo atendido
+    print(str(endr) + ': ' + nomeArq)
+    
+    #Obtem da camada de processamento, o conteudo do arquivo
+    returnMsg = getFileContent(nomeArq)
+    
+    #envia a resposta para o lado client 
+    print("retorno Server: " + str(len(returnMsg)))
+    cliSock.sendall(returnMsg.encode('utf-8'))
+    
+    #fecha a conexao logo apos o envio
+    cliSock.close()
 
 
 #funcao principal da rotina server

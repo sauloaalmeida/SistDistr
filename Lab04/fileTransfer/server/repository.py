@@ -1,25 +1,15 @@
-from os.path import exists
-
 #Constantes usadas no projeto
 FILE_PATH="/home/saulo/SistDistr/files/"
-ERROR_MSG="Arquivo '{arquivo}' solicitado nao foi encontrado"
-    
-    
-#metodo que retorna o conteudo do arquivo (caso exista) 
-#ou uma mensagem de erro (caso nao exista    
-def getContent(arq):
+
+'''Metodo que retorna o conteudo do arquivo 
+   eh esperado que sua existencia ja tenha sido testada 
+   Entrada: nome do arquivo
+   Saida: se o arquivo existir, retorna o conteudo (como string) de todo o arquivo
+          se o arquivo nao existir, sobe a exception FileNotFoundError 
+'''
+def getFileContent(arq):
      fullPath=FILE_PATH + arq
-     text = ""
      
-     #Se o arquivo nao existir, devolve mensagem de erro
-     if not exists(fullPath):
-          return ERROR_MSG
-     
-     #se ainda esta aqui, le o arquivo e devolve o conteudo
-     file = open(fullPath,mode='r')
-     text = file.read()
- 
-     #fecha o arquivo
-     file.close()
-     
-     return text
+     #le o arquivo e devolve o conteudo
+     with open(fullPath, 'r') as targetFile:
+         return targetFile.read()
