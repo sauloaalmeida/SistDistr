@@ -17,7 +17,7 @@ def getFileContent(fileName):
     try:
         fileContent = service.fileContent(fileName)
     except FileNotFoundError:
-        fileContent = "ERROR"
+        fileContent = "FILE_NOT_FOUND"
     return fileContent
 
 '''Inicializa o socket inicial do lado server

@@ -30,6 +30,6 @@ def getFileContent(fileName):
         sock.sendall(fileName.encode("utf-8"))
         msgRcv = receiveAll(sock)
         fileContent = str(msgRcv,  encoding='utf-8')
-        if(fileContent ==  "ERROR"):
+        if(fileContent ==  "FILE_NOT_FOUND"):
             raise FileNotFoundError("O arquivo '{0}' nao existe!\n".format(fileName))
         return fileContent
